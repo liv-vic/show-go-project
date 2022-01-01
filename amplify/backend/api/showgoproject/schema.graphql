@@ -1,0 +1,138 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Mutation {
+  createShows(input: CreateShowsInput!): Shows
+  deleteShows(input: DeleteShowsInput!): Shows
+  updateShows(input: UpdateShowsInput!): Shows
+}
+
+type Query {
+  getShows(Timestamp: AWSDateTime!, Whatisthenameofyourshow: ID!): Shows
+  listShows(filter: TableShowsFilterInput, limit: Int, nextToken: String): ShowsConnection
+}
+
+type Shows {
+  Address: String!
+  Description: String!
+  Email: AWSEmail!
+  Genre: String!
+  LocationName: String!
+  Poster: String
+  ShowDate: AWSDate!
+  ShowName: String!
+  ShowTime: AWSTime!
+  Timestamp: AWSDateTime!
+}
+
+type ShowsConnection {
+  items: [Shows]
+  nextToken: String
+}
+
+type Subscription {
+  onCreateShows(Address: String, LocationName: String, ShowDate: AWSDate, ShowName: String, Timestamp: AWSDateTime): Shows @aws_subscribe(mutations : ["createShows"])
+  onDeleteShows(Address: String, LocationName: String, ShowDate: AWSDate, ShowName: String, Timestamp: AWSDateTime): Shows @aws_subscribe(mutations : ["deleteShows"])
+  onUpdateShows(Address: String, LocationName: String, ShowDate: AWSDate, ShowName: String, Timestamp: AWSDateTime): Shows @aws_subscribe(mutations : ["updateShows"])
+}
+
+input CreateShowsInput {
+  Address: String!
+  Description: String!
+  Email: AWSEmail!
+  Genre: String!
+  LocationName: String!
+  Poster: String
+  ShowDate: AWSDate!
+  ShowName: String!
+  ShowTime: AWSTime!
+  Timestamp: AWSDateTime!
+}
+
+input DeleteShowsInput {
+  Timestamp: AWSDateTime!
+}
+
+input TableBooleanFilterInput {
+  eq: Boolean
+  ne: Boolean
+}
+
+input TableFloatFilterInput {
+  between: [Float]
+  contains: Float
+  eq: Float
+  ge: Float
+  gt: Float
+  le: Float
+  lt: Float
+  ne: Float
+  notContains: Float
+}
+
+input TableIDFilterInput {
+  beginsWith: ID
+  between: [ID]
+  contains: ID
+  eq: ID
+  ge: ID
+  gt: ID
+  le: ID
+  lt: ID
+  ne: ID
+  notContains: ID
+}
+
+input TableIntFilterInput {
+  between: [Int]
+  contains: Int
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+  notContains: Int
+}
+
+input TableShowsFilterInput {
+  Address: TableStringFilterInput
+  Description: TableStringFilterInput
+  Email: TableStringFilterInput
+  Genre: TableStringFilterInput
+  LocationName: TableStringFilterInput
+  Poster: TableStringFilterInput
+  ShowDate: TableStringFilterInput
+  ShowName: TableStringFilterInput
+  ShowTime: TableStringFilterInput
+  Timestamp: TableStringFilterInput
+}
+
+input TableStringFilterInput {
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+}
+
+input UpdateShowsInput {
+  Address: String
+  Description: String
+  Email: AWSEmail
+  Genre: String
+  LocationName: String
+  Poster: String
+  ShowDate: AWSDate
+  ShowName: String
+  ShowTime: AWSTime
+  Timestamp: AWSDateTime!
+}
