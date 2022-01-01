@@ -10,6 +10,7 @@ class DisplayShows extends Component {
 //ok so  it's becoming clear that i didn't connect it to the right API
     getShows = async () =>{
         const result = await API.graphql(graphqlOperation(listShows))
+        console.log("all posts: ", JSON.stringify(result.data.listShows.items))
     }
     render() {
         return (
